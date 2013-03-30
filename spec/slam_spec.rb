@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'slam'
 
 describe Slam::Dunk do
