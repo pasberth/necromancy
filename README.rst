@@ -16,6 +16,10 @@ Slam provides an symbol-hack.
 
   [:foo, :hoge, :bar, :fuga].select(&L.to_s . length > 3)
 
+  # (1..5).map { |x| x ** 2 }
+
+  (1..5).map(&L ** 2) # => [1, 4, 9, 16, 25]
+
 Installation
 --------------------------------------------------------------------------------
 
