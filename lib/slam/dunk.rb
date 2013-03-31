@@ -14,7 +14,10 @@ module Slam
     end
 
     def method_missing(name, *args, &block)
-      self >> self.class.new(name, *args, &block)
+      f = to_proc
+      g = self.class.new(name, *args, &block).to_proc
+      h = ->(*args, &block) { g.(f.(*args, &block)) }
+      self.class.new(h)
     end
 
     def to_proc
@@ -23,13 +26,6 @@ module Slam
 
     def class
       @class ||= (class << self; self end).superclass
-    end
-
-    def >>(callable)
-      f = to_proc
-      g = callable.to_proc
-      h = ->(*args, &block) { g.(f.(*args, &block)) }
-      self.class.new(h)
     end
   end
 end
