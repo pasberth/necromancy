@@ -30,5 +30,7 @@ module Slam
     def to_proc
       ->(*args, &block) { @callable.(*args, *@args, &(block||@block)) }
     end
+
+    protected :to_proc
   end
 end

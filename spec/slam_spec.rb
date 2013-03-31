@@ -34,4 +34,10 @@ describe Slam::Dunk do
     %w[c++ lisp].map(&l.upcase + "er").
       should == ["C++er", "LISPer"]
   end
+
+  example do
+    procs = %w(succ pred odd?).map &l.to_sym . to_proc
+    procs.map(&l.call(1)).
+      should == [2, 0, true]
+  end
 end
