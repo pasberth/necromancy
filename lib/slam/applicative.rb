@@ -10,7 +10,7 @@ module Slam
       def *(callable) 
         f = to_proc
         g = callable.to_proc
-        h = ->(*args, &block) { f.(*args, x, &block) if x = g.() }
+        h = ->(*args, &block) { (x = g.(*args, &block)) ? f.(*args, x, &block) : x }
         self.class.new(h)
       end
     end
