@@ -1,24 +1,13 @@
 module Slam
 
-  class Base < BasicObject
+  class Dunk < BasicObject
 
-    private *instance_methods
-  end
+    IDENTITY = ->(x) { x }
 
-  class Dunk < Base
+    protected *instance_methods
+    protected
 
-    private
-
-    def method_missing(name, *args, &block)
-      Compose.new(name, *args, &block)
-    end
-  end
-
-  class Compose < Base
-
-    private
-
-    def initialize(callable, *args, &block)
+    def initialize(callable = IDENTITY, *args, &block)
       @callable = callable.to_proc
       @args = args
       @block = block
@@ -26,15 +15,13 @@ module Slam
 
     def method_missing(name, *args, &block)
       f = to_proc
-      g = Compose.new(name, *args, &block).to_proc
+      g = Dunk.new(name, *args, &block).to_proc
       h = ->(*args, &block) { g.(f.(*args, &block)) }
-      Compose.new(h)
+      Dunk.new(h)
     end
 
     def to_proc
       ->(*args, &block) { @callable.(*args, *@args, &(block||@block)) }
     end
-
-    protected :to_proc
   end
 end
