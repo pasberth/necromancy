@@ -10,6 +10,7 @@ module Slam
       end
     else
       require 'slam/ext/compose'
+      require 'slam/ext/or'
     end
   end
 end
