@@ -7,12 +7,16 @@ module Slam
 
   class Dunk < Base
 
+    private
+
     def method_missing(name, *args, &block)
       Compose.new(name, *args, &block)
     end
   end
 
   class Compose < Base
+
+    private
 
     def initialize(callable, *args, &block)
       @callable = callable.to_proc
