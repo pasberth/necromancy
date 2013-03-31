@@ -7,12 +7,7 @@ module Slam
 
     refine Dunk do
 
-      def >>(callable)
-        f = to_proc
-        g = callable.to_proc
-        h = ->(*args, &block) { g.(f.(*args, &block)) }
-        Dunk.new(h)
-      end
+      public :>>
     end
   end
 end
