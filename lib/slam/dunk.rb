@@ -2,7 +2,7 @@ module Slam
 
   class Dunk < BasicObject
 
-    IDENTITY = ->(x) { x }
+    IDENTITY = ->(*xs) { xs }
 
     protected *instance_methods
     protected
@@ -16,7 +16,7 @@ module Slam
     def method_missing(name, *args, &block)
       f = to_proc
       g = self.class.new(name, *args, &block).to_proc
-      h = ->(*args, &block) { g.(f.(*args, &block)) }
+      h = ->(*args, &block) { g.(*f.(*args, &block)) }
       self.class.new(h)
     end
 
