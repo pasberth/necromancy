@@ -1,10 +1,10 @@
 require 'slam'
 
-class OrDunk < Slam::Dunk
+class AlternativeDunk < Slam::Dunk
   include ::Slam::Alternative
 end
 
-describe OrDunk do
+describe AlternativeDunk do
 
   let(:l) { described_class.new }
 

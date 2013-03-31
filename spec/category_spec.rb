@@ -1,10 +1,10 @@
 require 'slam'
 
-class ComposeDunk < Slam::Dunk
+class CategoryDunk < Slam::Dunk
   include ::Slam::Category
 end
 
-describe ComposeDunk do
+describe CategoryDunk do
 
   let(:l) { described_class.new }
 
