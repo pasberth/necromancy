@@ -1,10 +1,9 @@
 require 'slam'
 
 if RUBY_VERSION < "2.0.0"
-  require 'slam/ext/compose'
+  class Slam::Dunk; include ::Slam::Category; end
 else
-  require 'slam/ext'
-  using Slam::Ext::Compose
+  using Slam::Category
 end
 
 L = Slam::Dunk.new

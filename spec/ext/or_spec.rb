@@ -1,7 +1,10 @@
 require 'slam'
-require 'slam/ext/or'
 
-describe Slam::Dunk do
+class OrDunk < Slam::Dunk
+  include ::Slam::Alternative
+end
+
+describe OrDunk do
 
   let(:l) { described_class.new }
 
