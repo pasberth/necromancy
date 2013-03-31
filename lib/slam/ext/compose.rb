@@ -8,17 +8,10 @@ module Slam
     refine Dunk do
 
       def >>(callable)
-        Compose.new(callable.to_proc)
-      end
-    end
-
-    refine ::Slam::Compose do
-
-      def >>(callable)
         f = to_proc
         g = callable.to_proc
         h = ->(*args, &block) { g.(f.(*args, &block)) }
-        Compose.new(h)
+        Dunk.new(h)
       end
     end
   end
