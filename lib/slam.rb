@@ -34,5 +34,13 @@ module Slam
       h = ->(*args, &block) { f.(*args, &block) || g.(*args, &block) }
       Dunk.new(h)
     end
+
+    # Sequential application. 
+    def *(callable) 
+      f = to_proc
+      g = callable.to_proc
+      h = ->(*args, &block) { f.(x) if x = g.(*args, &block) }
+      Dunk.new(h)
+    end
   end
 end
