@@ -12,11 +12,11 @@ module Slam
       end
 
       def <(callable)
-        self.class.new(->(o, x, y) {x}) * callable * self
+        (self.class.new(->(o, x, y) {x}) * self) * callable
       end
 
       def >(callable)
-        self.class.new(->(o, x, y) {y}) * callable * self
+        (self.class.new(->(o, x, y) {y}) * self) * callable
       end
     end
   end

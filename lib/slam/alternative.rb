@@ -18,7 +18,7 @@ module Slam
       def *(callable) 
         f = to_proc
         g = callable.to_proc
-        h = ->(o, *args, &block) { empty?(x = g.(o, &block)) ? x : f.(o, *args, x, &block) }
+        h = ->(o, *args, &block) { empty?(x = g.(o, &block)) ? x : f.(o, x, *args, &block) }
         self.class.new(h)
       end
 
