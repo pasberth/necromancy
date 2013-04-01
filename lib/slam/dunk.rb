@@ -16,7 +16,7 @@ module Slam
     def method_missing(name, *args, &block)
       f = to_proc
       g = self.class.new(name, *args, &block).to_proc
-      h = ->(o, *args, &block) { g.(f.(o, &block), *args) }
+      h = ->(*args, &block) { g.(f.(*args, &block)) }
       self.class.new(h)
     end
 
