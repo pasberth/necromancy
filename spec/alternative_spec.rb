@@ -22,4 +22,9 @@ describe AlternativeDunk do
     (1..5).map(&l.+ * proc{}).
       should == [nil]*5
   end
+
+  example do
+    (1..5).map(&(l.odd? > l.succ) | l.pred).
+      should == [2, 1, 4, 3, 6]
+  end
 end
