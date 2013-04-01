@@ -5,8 +5,6 @@ module Slam
 
   module Applicative; extend Ext
 
-    using Category
-
     refine Dunk do
 
       def **(callable)
