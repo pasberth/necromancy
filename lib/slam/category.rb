@@ -10,14 +10,14 @@ module Slam
       def >>(callable)
         f = to_proc
         g = callable.to_proc
-        h = ->(*args, &block) { g.(f.(*args, &block)) }
+        h = ->(*args, &block) { g.(*f.(*args, &block)) }
         self.class.new(h)
       end
 
       def <<(callable)
         f = callable.to_proc
         g = to_proc
-        h = ->(*args, &block) { g.(f.(*args, &block)) }
+        h = ->(*args, &block) { g.(*f.(*args, &block)) }
         self.class.new(h)
       end
     end
