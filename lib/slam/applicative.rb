@@ -9,12 +9,16 @@ module Slam
 
     refine Dunk do
 
-      def *(callable)
-        self << callable
+      def **(callable)
+        self.class.new(callable) * self
       end
 
-      def **(callable)
-        self >> callable
+      def <(callable)
+        self.class.new(->(x, y) {x}) * self * callable
+      end
+
+      def >(callable)
+        self.class.new(->(x, y) {y}) * self * callable
       end
     end
   end
