@@ -2,34 +2,24 @@ module Slam
 
   class Dunk < BasicObject
 
+    IDENTITY = ->(g, *args, &block) { g.(*args, &block) }
+
     protected *instance_methods
     protected
 
-    def initialize(callable = nil, *args, &block)
-      @callable = callable.to_proc unless callable.nil?
+    def initialize(callable = IDENTITY, *args, &block)
+      @callable = callable.to_proc
       @args = args
       @block = block
     end
 
-    def compose(callable, *args, &block)
-      if @callable.nil?
-        self.class.new(callable, *args, &block)
-      else
-        f = to_proc
-        g = self.class.new(callable, *args, &block).to_proc
-        h = ->(*args, &block) { g.(f.(*args, &block)) }
-        self.class.new(h)
-      end
+    def method_missing(name, *args, &block)
+      f = ->(*_args) { name.to_proc.(*_args, *args, &block) }
+      f_ = ->(g, *args, &block) { g.(@callable.(f, *args, &block)) }
+      self.class.new(f_)
     end
-
-    alias method_missing compose
-
     def to_proc
-      if @callable.nil?
-        ->(x){x}
-      else
-        ->(*args, &block) { @callable.(*args, *@args, &(block||@block)) }
-      end
+      ->(*args, &block) { @callable.(::Object.send(:proc){|x|x}, *args, *@args, &(block||@block)) }
     end
 
     def class
