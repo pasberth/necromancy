@@ -13,6 +13,8 @@ module Slam
         !alternative
       end
 
+      protected :empty?
+
       def *(callable) 
         f = to_proc
         g = callable.to_proc
