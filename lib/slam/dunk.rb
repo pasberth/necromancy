@@ -7,6 +7,10 @@ module Slam
     protected *instance_methods
     protected
 
+    attr_reader :callable
+    attr_reader :args
+    attr_reader :block
+
     def initialize(callable = IDENTITY, *args, &block)
       @callable = callable.to_proc
       @args = args
@@ -18,8 +22,17 @@ module Slam
       f_ = ->(g, *args, &block) { g.(@callable.(f, *args, &block)) }
       self.class.new(f_)
     end
+
+    def multiple_values
+      @multiple_values ||= ->(*args, &block) { @callable.(->(*xs){xs}, *args, *@args, &(block||@block)) }
+    end
+
+    def single_value
+      @single_value ||= ->(*args, &block) { @callable.(->(*xs){xs.size==1 ? xs[0] : xs}, *args, *@args, &(block||@block)) }
+    end
+
     def to_proc
-      ->(*args, &block) { @callable.(::Object.send(:proc){|x|x}, *args, *@args, &(block||@block)) }
+      single_value
     end
 
     def class
