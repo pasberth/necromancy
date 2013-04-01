@@ -2,7 +2,7 @@ module Slam
 
   class Dunk < BasicObject
 
-    IDENTITY = ->(x) { x }
+    IDENTITY = ->(g, *args, &block) { g.(*args, &block) }
 
     protected *instance_methods
     protected
@@ -14,22 +14,17 @@ module Slam
     end
 
     def method_missing(name, *args, &block)
-      self >> self.class.new(name, *args, &block)
+      f = ->(*_args) { name.to_proc.(*_args, *args, &block) }
+      f_ = ->(g, *args, &block) { g.(@callable.(f, *args, &block)) }
+      self.class.new(f_)
     end
 
     def to_proc
-      ->(*args, &block) { @callable.(*args, *@args, &(block||@block)) }
+      ->(*args, &block) { @callable.(->(x){x}, *args, *@args, &(block||@block)) }
     end
 
     def class
       @class ||= (class << self; self end).superclass
-    end
-
-    def >>(callable)
-      f = to_proc
-      g = callable.to_proc
-      h = ->(*args, &block) { g.(f.(*args, &block)) }
-      self.class.new(h)
     end
   end
 end
