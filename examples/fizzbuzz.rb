@@ -1,5 +1,4 @@
 require 'slam'
-using Slam::Applicative
 using Slam::Alternative
 
 L = Slam::Dunk.new
