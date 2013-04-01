@@ -21,6 +21,20 @@ module Slam
         self.class.new(h)
       end
 
+      def <(callable)
+        f = to_proc
+        g = callable.to_proc
+        h = ->(*args, &block) { (x = g.(*args, &block)) ? f.(*args, &block) : x }
+        self.class.new(h)
+      end
+
+      def >(callable)
+        f = callable.to_proc
+        g = to_proc
+        h = ->(*args, &block) { (x = g.(*args, &block)) ? f.(*args, &block) : x }
+        self.class.new(h)
+      end
+
       def |(callable)
         f = to_proc
         g = callable.to_proc
