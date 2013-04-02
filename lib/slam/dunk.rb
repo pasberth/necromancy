@@ -23,16 +23,8 @@ module Slam
       self.class.new(f_)
     end
 
-    def multiple_values
-      @multiple_values ||= ->(*args, &block) { @callable.(->(*xs){xs}, *args, *@args, &(block||@block)) }
-    end
-
-    def single_value
-      @single_value ||= ->(*args, &block) { @callable.(->(*xs){xs.size==1 ? xs[0] : xs}, *args, *@args, &(block||@block)) }
-    end
-
     def to_proc
-      single_value
+      ->(*args, &block) { @callable.(->(*xs){xs.size==1 ? xs[0] : xs}, *args, *@args, &(block||@block)) }
     end
 
     def class
