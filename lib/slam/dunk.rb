@@ -7,10 +7,6 @@ module Slam
     protected *instance_methods
     protected
 
-    attr_reader :callable
-    attr_reader :args
-    attr_reader :block
-
     def initialize(callable = IDENTITY, *args, &block)
       @callable = callable.to_proc
       @args = args
