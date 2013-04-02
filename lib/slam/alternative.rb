@@ -16,12 +16,12 @@ module Slam
       protected :empty?
 
       def *(callable) 
-        f = ->(g, *args, &block) { empty?(x = callable.to_proc.(*args, &block)) ? g.(x) : @callable.(g, *args, x, &block) }
+        f = ->(g, *xs, &block; f) { f = @callable.(->(x){x}, *xs, &block); empty?(x = callable.to_proc.(*xs, &block)) ? ->(*ys) { g.(x) } : ->(*ys) { g.(f.(x, *ys)) } }
         self.class.new(f)
       end
 
       def |(callable)
-        f = ->(g, *args, &block) { empty?(x = to_proc.(*args, &block)) ? g.(callable.to_proc.(*args, &block)) : g.(x) }
+        f = ->(g, *xs, &block) { ->(*ys) { empty?(x = to_proc.(*xs, *ys, &block)) ? g.(callable.to_proc.(*xs, *ys, &block)) : g.(x) } }
         self.class.new(f)
       end
     end

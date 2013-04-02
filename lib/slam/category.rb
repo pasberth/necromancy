@@ -8,12 +8,12 @@ module Slam
     refine Dunk do
 
       def >>(callable)
-        f = ->(g, *args, &block) { g.(@callable.(callable.to_proc, *args, &block)) }
+        f = ->(g, *xs, &block) { ->(*ys) { g.(@callable.(callable.to_proc, *xs, *ys, &block).()) } }
         self.class.new(f)
       end
 
       def <<(callable)
-        f = ->(g, *args, &block) { g.(to_proc.(callable.to_proc.(*args, &block))) }
+        f = ->(g, *xs, &block) { ->(*ys) { g.(to_proc.(callable.to_proc.(*xs, *ys, &block))) } }
         self.class.new(f)
       end
     end
