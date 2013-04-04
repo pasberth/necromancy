@@ -15,65 +15,77 @@ describe AlternativeDunk do
   shared_examples_for "pure" do
 
     describe "#*" do
-      subject { proc(&l.f * proc{r}) }
-      before(:each) { d.should_receive(:f) }
-      example { subject.(d).should == f.(r) }
+      example { proc(&f * l).(r).should == proc(&f).(r, proc(&l).(r)) }
+      example { proc(&f * l | l).(r).should == proc(&f).(r, proc(&l).(r)) }
+      example { proc(&f * l | g).(r).should == proc(&f).(r, proc(&l).(r)) }
     end
 
     describe "#|" do
-      subject { proc(&l | f) }
-      before(:each) { f.should_not_receive(:call) }
-      example { subject.(r).should == r }
+      example { proc(&l | g).(r).should == proc(&l).(r) }
+      example { proc(&l | f * l).(r).should == proc(&l).(r) }
     end
   end
 
   shared_examples_for "empty" do
 
     describe "#*" do
-      subject { proc(&l.f * proc{r}) }
-      before(:each) { d.should_not_receive(:f) }
-      example { subject.(d).should == r }
+      example { proc(&f * l).(r).should == proc(&l).(r) }
+      example { proc(&f * l | g).(r).should == proc(&g).(r) }
     end
 
     describe "#|" do
-      subject { proc(&l | f) }
-      before(:each) { f.should_receive(:call).twice }
-      example { subject.(r).should == f.(r) }
+      example { proc(&l | g).(r).should == proc(&g).(r) }
+      example { proc(&l | f * l).(r).should == proc(&l).(r) }
     end
   end
 
   it_behaves_like "empty" do
     let(:r) { nil }
-    let(:f) { ->(r){:OK} }
+    let(:f) { described_class.new.inspect }
+    let(:g) { described_class.new.inspect }
   end
 
   it_behaves_like "empty" do
     let(:r) { false }
-    let(:f) { ->(r){:OK} }
+    let(:f) { described_class.new.& }
+    let(:g) { !described_class.new }
   end
 
   it_behaves_like "pure" do
     let(:r) { true }
-    let(:f) { ->(r){:OK} }
+    let(:f) { described_class.new.& }
+    let(:g) { !described_class.new }
   end
 
   it_behaves_like "pure" do
     let(:r) { 0 }
-    let(:f) { ->(r){:OK} }
+    let(:f) { described_class.new.^ }
+    let(:g) { !described_class.new }
   end
 
   it_behaves_like "pure" do
     let(:r) { [] }
-    let(:f) { ->(r){:OK} }
+    let(:f) { described_class.new.+ }
+    let(:g) { described_class.new.first }
   end
 
   it_behaves_like "pure" do
     let(:r) { {} }
-    let(:f) { ->(r){:OK} }
+    let(:f) { described_class.new.merge }
+    let(:g) { described_class.new[:x] }
+  end
+
+  it_behaves_like "empty" do
+    let(:r) { {} }
+    let(:l) { described_class.new[:x] }
+    let(:f) { described_class.new.== }
+    let(:g) { described_class.new.inspect }
   end
 
   it_behaves_like "pure" do
-    let(:r) { "" }
-    let(:f) { ->(r){:OK} }
+    let(:r) { {x: 42} }
+    let(:l) { described_class.new[:x] }
+    let(:f) { described_class.new.!= }
+    let(:g) { described_class.new.inspect }
   end
 end
