@@ -15,7 +15,7 @@ module Slam
 
       protected :empty?
 
-      def *(callable) 
+      def *(callable)
         f = ->(g, *xs, &block; f) { f = @callable.(->(x){x}, *xs, &block); empty?(x = callable.to_proc.(*xs, &block)) ? ->(*ys) { g.(x) } : ->(*ys) { g.(f.(x, *ys)) } }
         self.class.new(f)
       end
