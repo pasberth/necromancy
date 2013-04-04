@@ -16,11 +16,13 @@ describe AlternativeDunk do
 
     describe "#*" do
       subject { proc(&l.f * proc{r}) }
+      before(:each) { d.should_receive(:f) }
       example { subject.(d).should == f.(r) }
     end
 
     describe "#|" do
       subject { proc(&l | f) }
+      before(:each) { f.should_not_receive(:call) }
       example { subject.(r).should == r }
     end
   end
@@ -29,11 +31,13 @@ describe AlternativeDunk do
 
     describe "#*" do
       subject { proc(&l.f * proc{r}) }
+      before(:each) { d.should_not_receive(:f) }
       example { subject.(d).should == r }
     end
 
     describe "#|" do
       subject { proc(&l | f) }
+      before(:each) { f.should_receive(:call).twice }
       example { subject.(r).should == f.(r) }
     end
   end
