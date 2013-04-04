@@ -9,29 +9,35 @@ describe AlternativeDunk do
   let(:l) { described_class.new }
   shared_examples_for "pure" do
 
-    describe "#*" do
-      example { proc(&f * l).(r).should == proc(&f).(r, proc(&l).(r)) }
-      example { proc(&f * l | l).(r).should == proc(&f).(r, proc(&l).(r)) }
-      example { proc(&f * l | g).(r).should == proc(&f).(r, proc(&l).(r)) }
-    end
-
-    describe "#|" do
-      example { proc(&l | g).(r).should == proc(&l).(r) }
-      example { proc(&l | f * l).(r).should == proc(&l).(r) }
-    end
+    example { proc(&f * l).(r).should == proc(&f).(r, proc(&l).(r)) }
+    example { proc(&f * l | l).(r).should == proc(&f).(r, proc(&l).(r)) }
+    example { proc(&f * l | g).(r).should == proc(&f).(r, proc(&l).(r)) }
+    example { proc(&l | g).(r).should == proc(&l).(r) }
+    example { proc(&l | f * l).(r).should == proc(&l).(r) }
+    example { proc(&l | l ** f).(r).should == proc(&l).(r) }
+    example { proc(&l ** f).(r).should == proc(&f).(r, proc(&l).(r)) }
+    example { proc(&l ** f | l).(r).should == proc(&f).(r, proc(&l).(r)) }
+    example { proc(&l ** f | g).(r).should == proc(&f).(r, proc(&l).(r)) }
+    example { proc(&l >> g).(r).should == proc(&g).(r) }
+    example { proc(&l >> f * l).(r).should == proc(&f).(r, proc(&l).(r)) }
+    example { proc(&g << l).(r).should == proc(&g).(r) }
+    example { proc(&f * l << l).(r).should == proc(&f).(r, proc(&l).(r)) }
   end
 
   shared_examples_for "empty" do
 
-    describe "#*" do
-      example { proc(&f * l).(r).should == proc(&l).(r) }
-      example { proc(&f * l | g).(r).should == proc(&g).(r) }
-    end
-
-    describe "#|" do
-      example { proc(&l | g).(r).should == proc(&g).(r) }
-      example { proc(&l | f * l).(r).should == proc(&l).(r) }
-    end
+    example { proc(&f * l).(r).should == proc(&l).(r) }
+    example { proc(&f * l | g).(r).should == proc(&g).(r) }
+    example { proc(&l | g).(r).should == proc(&g).(r) }
+    example { proc(&l | f * l).(r).should == proc(&l).(r) }
+    example { proc(&l | l ** f).(r).should == proc(&l).(r) }
+    example { proc(&l ** f).(r).should == proc(&l).(r) }
+    example { proc(&l ** f | l).(r).should == proc(&l).(r) }
+    example { proc(&l ** f | g).(r).should == proc(&g).(r) }
+    example { proc(&l >> g).(r).should == proc(&l).(r) }
+    example { proc(&l >> f * l).(r).should == proc(&l).(r) }
+    example { proc(&g << l).(r).should == proc(&l).(r) }
+    example { proc(&f * l << l).(r).should == proc(&l).(r) }
   end
 
   it_behaves_like "empty" do
