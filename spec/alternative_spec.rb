@@ -7,84 +7,69 @@ end
 describe AlternativeDunk do
 
   let(:l) { described_class.new }
+  let(:d) { double }
+  before :each do
+    d.stub(:f, &f)
+  end
 
-  describe "#|" do
+  shared_examples_for "pure" do
 
-    shared_examples_for "hoge" do # TODO: hoge->???
+    describe "#*" do
+      subject { proc(&l.f * proc{r}) }
+      example { subject.(d).should == f.(r) }
+    end
+
+    describe "#|" do
       subject { proc(&l | f) }
-      example { subject .(nil)   .should == f.() }
-      example { subject .(false) .should == f.() }
-      example { subject .(true)  .should == true }
-      example { subject .(0)     .should == 0    }
-      example { subject .([])    .should == []   }
-      example { subject .({})    .should == {}   }
-      example { subject .("")    .should == ""   }
-    end
-
-    context "42.itself" do
-
-      it_behaves_like "hoge" do
-        let(:f) { proc{42} }
-      end
+      example { subject.(r).should == r }
     end
   end
 
-  describe "#*" do
+  shared_examples_for "empty" do
 
-    shared_examples_for "pure" do
-      subject { proc(&l.f * g) }
-      example { subject.(r).should == r.f(g.()) }
+    describe "#*" do
+      subject { proc(&l.f * proc{r}) }
+      example { subject.(d).should == r }
     end
 
-    shared_examples_for "empty" do
-      subject { proc(&l.f * g) }
-      example { subject.(r).should == g.() }
-    end
-
-
-    context do
-      let(:r) { double }
-      before :each do
-        r.stub(:f, &:succ)
-      end
-
-      context do
-        it_behaves_like "pure" do
-          let(:g) { proc{42} }
-        end
-      end
-
-      context do
-        it_behaves_like "empty" do
-          let(:g) { proc{nil} }
-        end
-      end
-
-      context do
-        it_behaves_like "empty" do
-          let(:g) { proc{false} }
-        end
-      end
+    describe "#|" do
+      subject { proc(&l | f) }
+      example { subject.(r).should == f.(r) }
     end
   end
 
-  example do
-    [{ x: 42}, {}].map(&l[:x] | proc{0}).
-      should == [42, 0]
+  it_behaves_like "empty" do
+    let(:r) { nil }
+    let(:f) { ->(r){:OK} }
   end
 
-  example do
-    (1..5).map(&l.+ * proc{1}).
-      should == (2..6).to_a
+  it_behaves_like "empty" do
+    let(:r) { false }
+    let(:f) { ->(r){:OK} }
   end
 
-  example do
-    (1..5).map(&l.+ * proc{}).
-      should == [nil]*5
+  it_behaves_like "pure" do
+    let(:r) { true }
+    let(:f) { ->(r){:OK} }
   end
 
-  example do
-    (1..5).map(&(l.odd? > l.succ) | l.pred).
-      should == [2, 1, 4, 3, 6]
+  it_behaves_like "pure" do
+    let(:r) { 0 }
+    let(:f) { ->(r){:OK} }
+  end
+
+  it_behaves_like "pure" do
+    let(:r) { [] }
+    let(:f) { ->(r){:OK} }
+  end
+
+  it_behaves_like "pure" do
+    let(:r) { {} }
+    let(:f) { ->(r){:OK} }
+  end
+
+  it_behaves_like "pure" do
+    let(:r) { "" }
+    let(:f) { ->(r){:OK} }
   end
 end
