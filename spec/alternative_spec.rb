@@ -7,11 +7,6 @@ end
 describe AlternativeDunk do
 
   let(:l) { described_class.new }
-  let(:d) { double }
-  before :each do
-    d.stub(:f, &f)
-  end
-
   shared_examples_for "pure" do
 
     describe "#*" do
