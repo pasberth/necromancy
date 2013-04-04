@@ -8,7 +8,7 @@ module Slam
     refine Dunk do
 
       def **(callable)
-        self.class.new(->(*xs) { ->(*ys) { callable.to_proc.(*xs, *ys) } }) * self
+        self.class.new(->(g, *xs) { ->(*ys) { g.(callable.to_proc.(*xs, *ys)) } }) * self
       end
 
       def <(callable)
