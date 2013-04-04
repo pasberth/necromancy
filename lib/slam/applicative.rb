@@ -11,11 +11,11 @@ module Slam
         self.class.new(->(g, *xs) { ->(*ys) { g.(callable.to_proc.(*xs, *ys)) } }) * self
       end
 
-      def <(callable)
+      def <<(callable)
         self.class.new(->(g, *xs) {->(x, y){g.(x)}}) * self * callable
       end
 
-      def >(callable)
+      def >>(callable)
         self.class.new(->(g, *xs) {->(x, y){g.(y)}}) * self * callable
       end
     end

@@ -7,4 +7,4 @@ else
 end
 
 L = Slam::Dunk.new
-p %w(foo bar baz).map &L >> "foobarbaz".method(:index) # => [0, 3, 6]
+p %w(foo bar baz).map &L > "foobarbaz".method(:index) # => [0, 3, 6]

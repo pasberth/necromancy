@@ -20,7 +20,7 @@ describe Slam::Alternative::Dunk do
   end
 
   example do
-    (1..5).map(&(l.odd? > l.succ) | l.pred).
+    (1..5).map(&l.odd? >> l.succ | l.pred).
       should == [2, 1, 4, 3, 6]
   end
 end

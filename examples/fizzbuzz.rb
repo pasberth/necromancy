@@ -1,7 +1,7 @@
 require 'slam'
 
 L = Slam::Alternative::Dunk.new
-puts (1..100).map &(L%15).zero? ** proc{"FizzBuzz"} |
-                   (L%3).zero?  ** proc{"Fizz"}     |
-                   (L%5).zero?  ** proc{"Buzz"}     |
+puts (1..100).map &(L%15).zero? >> proc{"FizzBuzz"} |
+                   (L%3).zero?  >> proc{"Fizz"}     |
+                   (L%5).zero?  >> proc{"Buzz"}     |
                    L
