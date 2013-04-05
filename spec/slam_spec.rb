@@ -1,43 +1,33 @@
 require 'slam'
 
+class TestStr < String
+
+  def f
+    TestStr.new upcase
+  end
+
+  def g(x)
+    TestStr.new self + x
+  end
+end
+
 describe Slam::Dunk do
 
   let(:l) { described_class.new }
 
-  example do
-    [:foo, :bar, :baz].map(&l.to_s . upcase).
-      should == ["FOO", "BAR", "BAZ"]
+  shared_examples_for "a Dunk" do
+
+    example { proc(&l.f).(r).should == r.f  }
+    example { proc(&l.g(x)).(r).should == r.g(x)  }
+    example { proc(&l.f . g(x)).(r).should == r.f.g(x)  }
+    example { proc(&l.g(x) . f).(r).should == r.g(x).f  }
+    example { proc(&l.f . f).(r).should == r.f.f  }
+    example { proc(&l.g(x) . g(x)).(r).should == r.g(x).g(x)  }
   end
 
-  example do
-    [:foo, :hoge, :bar, :fuga].select(&l.to_s . length > 3).
-      should == [:hoge, :fuga]
-  end
+  it_behaves_like "a Dunk" do
 
-  example do
-    qstr = "hoge=fuga&foo=bar"
-    Hash[qstr.split(?&).map &l.split(?=)].
-      should == {"hoge"=>"fuga", "foo"=>"bar"}
-  end
-
-  example do
-    (1..5).map(&l ** 2).
-      should == [1, 4, 9, 16, 25]
-  end
-
-  example do
-    %w[c++ lisp].map(&(l + "er").upcase).
-      should == ["C++ER", "LISPER"]
-  end
-
-  example do
-    %w[c++ lisp].map(&l.upcase + "er").
-      should == ["C++er", "LISPer"]
-  end
-
-  example do
-    procs = %w(succ pred odd?).map &l.to_sym . to_proc
-    procs.map(&l.call(1)).
-      should == [2, 0, true]
+    let(:r) { TestStr.new 'hoge' }
+    let(:x) { 'fuga' }
   end
 end
