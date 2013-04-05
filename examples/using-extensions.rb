@@ -1,4 +1,6 @@
 require 'slam'
 
-L = Slam::Category::Dunk.new
-p %w(foo bar baz).map &L > "foobarbaz".method(:index) # => [0, 3, 6]
+L = Slam::Alternative.hiding(:*, :**)::Dunk.new
+
+ary = [1, nil, 2, nil, 3]
+p ary.map &(L | proc{0}) * 10 # => [10, 0, 20, 0, 3]
