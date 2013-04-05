@@ -7,8 +7,21 @@ module Slam
       Module.new { include mod; extend Ext; module_eval(&block) }
     end
 
-    def call(*names)
-      branch { protected *instance_methods; public *names }
+    def call(*targets)
+      branch { protected *instance_methods }.using(*targets)
+    end
+
+    def using(*targets)
+      names = targets.select { |t| t.is_a? Symbol }
+      aliases = targets.select { |t| t.is_a? Hash }.inject(:merge)
+      branch do
+        public *names
+        aliases.each do |org, als|
+          alias_method(als, org)
+          protected org
+          public als
+        end
+      end
     end
 
     def hiding(*names)
