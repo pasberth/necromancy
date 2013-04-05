@@ -8,17 +8,22 @@ describe ArrowDunk do
 
   let(:l) { described_class.new }
 
-  example do
-    %w(foo bar baz).map(&l.upcase & :capitalize).
-      should == [ ["FOO", "Foo"],
-                  ["BAR", "Bar"],
-                  ["BAZ", "Baz"] ]
+  shared_examples_for "an Arrow" do
+    example { proc(&l & l).(r).should == [proc(&l).(r), proc(&l).(r)] }
+    example { proc(&l & l & l).(r).should == [proc(&l).(r), proc(&l).(r), proc(&l).(r)] }
+    example { proc(&l & l & l & l).(r).should == [proc(&l).(r), proc(&l).(r), proc(&l).(r), proc(&l).(r)] }
   end
 
-  example do
-    %w(foo bar baz).map(&l.upcase & :capitalize & :reverse).
-      should == [ ["FOO", "Foo", "oof"],
-                  ["BAR", "Bar", "rab"],
-                  ["BAZ", "Baz", "zab"] ]
+  it_behaves_like "an Arrow" do
+    let(:r) { 0 }
+  end
+
+  it_behaves_like "an Arrow" do
+    let(:r) { [] }
+  end
+
+  it_behaves_like "an Arrow" do
+    let(:l) { described_class.new.keys }
+    let(:r) { { x: 42 } }
   end
 end
