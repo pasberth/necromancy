@@ -1,10 +1,10 @@
 require 'necromancy'
-require 'necromancy/ext'
+require 'necromancy/control'
 require 'necromancy/category'
 
 module Necromancy
 
-  module Arrow; extend Ext
+  module Arrow; extend Control
 
     include Category
 

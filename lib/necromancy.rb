@@ -1,7 +1,7 @@
 module Necromancy
 
   require 'necromancy/dunk'
-  require 'necromancy/ext'
+  require 'necromancy/control'
   require 'necromancy/category'
   require 'necromancy/arrow'
   require 'necromancy/applicative'

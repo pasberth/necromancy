@@ -1,10 +1,10 @@
 module Necromancy
 
-  module Ext
+  module Control
 
     def branch(&block)
       mod = self
-      Module.new { include mod; extend Ext; module_eval(&block) }
+      Module.new { include mod; extend Control; module_eval(&block) }
     end
 
     def call(*targets)

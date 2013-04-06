@@ -1,9 +1,9 @@
 require 'necromancy'
-require 'necromancy/ext'
+require 'necromancy/control'
 
 module Necromancy
 
-  module Alternative; extend Ext
+  module Alternative; extend Control
 
     include Necromancy::Applicative
 

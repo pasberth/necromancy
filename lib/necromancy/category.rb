@@ -1,9 +1,9 @@
 require 'necromancy'
-require 'necromancy/ext'
+require 'necromancy/control'
 
 module Necromancy
 
-  module Category; extend Ext
+  module Category; extend Control
 
     def >(callable)
       str = make_evaluable_string(callable)
