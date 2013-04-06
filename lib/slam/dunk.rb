@@ -2,25 +2,25 @@ module Slam
 
   class Dunk < BasicObject
 
-    IDENTITY = ->(g, *xs, &block) { ->(*ys) { g.(*xs, *ys, &block) } }
-
     protected *instance_methods
     protected
 
-    def initialize(callable = IDENTITY, *args, &block)
-      @callable = callable.to_proc
+    def initialize(necromancy = "args", *args, &block)
+      $stdout.puts([necromancy, args].inspect)
+      @necromancy = necromancy
       @args = args
       @block = block
     end
 
     def method_missing(name, *args, &block)
-      f = ->(*_args) { name.to_proc.(*_args, *args, &block) }
-      f_ = ->(g, *xs, &block) { ->(*ys) { g.(@callable.(f, *xs, *ys, &block).()) } }
-      self.class.new(f_)
+      getargs = args.map{|x|"ObjectSpace._id2ref(#{x.__id__}),"}.join
+      getblock = "ObjectSpace._id2ref(#{block.__id__})"
+      necromancy = "[:#{name}.to_proc.(*(#@necromancy), #{getargs} &(#{getblock}))]"
+      self.class.new(necromancy)
     end
 
     def to_proc
-      ->(*args, &block) { @callable.(->(*xs){xs.size==1 ? xs[0] : xs}, *args, *@args, &(block||@block)).() }
+      ::TOPLEVEL_BINDING.eval("->(*args) { ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy))  }")
     end
 
     def class
