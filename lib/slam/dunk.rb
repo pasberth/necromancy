@@ -28,7 +28,7 @@ module Slam
       end
 
       necromancy = "[#{getproc}.(*(#{@necromancy})#{getargs}#{getblock})]"
-      self.class.new(necromancy, @references)
+      self.class.new(necromancy, @references.dup)
     end
 
     def to_proc
