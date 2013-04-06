@@ -36,7 +36,7 @@ module Necromancy
     end
 
     def method_missing(name, *args, &block)
-      super if name[0].upcase != name[0]
+      super unless ('A'..'Z').include? name[0]
       if ::Necromancy::Control.const_defined? name
         branch { include ::Necromancy::Control.const_get(name) }
       else

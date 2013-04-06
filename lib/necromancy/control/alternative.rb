@@ -39,5 +39,9 @@ module Necromancy
         self
       end
     end
+
+
+    alias __Applicative_Astarisk *
+    protected :__Applicative_Astarisk
   end
 end
