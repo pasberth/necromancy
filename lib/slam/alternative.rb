@@ -28,7 +28,6 @@ module Slam
         @empty_mth = ->(*args) { empty?(*args) }
         @avoid_gc << @empty_mth
       end
-      @avoid_gc << empty_mth
       str = make_evaluable_string(callable)
       necromancy = "ObjectSpace._id2ref(#{@empty_mth.__id__}).(*(xs = #@necromancy)) ? (#{str}) : xs"
       self.class.new(necromancy)
