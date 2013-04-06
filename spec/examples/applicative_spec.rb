@@ -7,12 +7,12 @@ describe Slam::Applicative::Dunk do
   example do
 
     %w(foo bar baz).map(&l.+ * :reverse).
-      should == [ "foooof", "barrab", "bazzab" ]
+      should == %w(foo bar baz).map {|s| s + s.reverse }
   end
 
   example do
 
     %w(foo bar baz).map(&l.reverse ** :+).
-      should == [ "foooof", "barrab", "bazzab" ]
+      should == %w(foo bar baz).map {|s| s + s.reverse }
   end
 end

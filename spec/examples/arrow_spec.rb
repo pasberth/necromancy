@@ -6,27 +6,21 @@ describe Slam::Arrow::Dunk do
 
   example do
     %w(foo bar baz).map(&l.upcase & :capitalize).
-      should == [ ["FOO", "Foo"],
-                  ["BAR", "Bar"],
-                  ["BAZ", "Baz"] ]
+      should == %w(foo bar baz).map {|s| [s.upcase, s.capitalize] }
   end
 
   example do
     %w(foo bar baz).map(&l.upcase & :capitalize & :reverse).
-      should == [ ["FOO", "Foo", "oof"],
-                  ["BAR", "Bar", "rab"],
-                  ["BAZ", "Baz", "zab"] ]
+      should == %w(foo bar baz).map {|s| [s.upcase, s.capitalize, s.reverse] }
   end
 
   example do
     %w(foo bar baz).map(&l.upcase & :capitalize > :+).
-      should == [ "FOOFoo", "BARBar", "BAZBaz" ]
+      should == %w(foo bar baz).map {|s| s.upcase + s.capitalize }
   end
 
   example do
     %w(foo bar baz).map(&l.upcase & :capitalize > l.chars.to_a * :to_sym).
-      should == [ [%w(F O O), :Foo],
-                  [%w(B A R), :Bar],
-                  [%w(B A Z), :Baz] ]
+      should == %w(foo bar baz).map {|s| [s.upcase.chars.to_a, s.capitalize.to_sym] }
   end
 end
