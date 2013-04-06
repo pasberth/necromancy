@@ -1,6 +1,6 @@
-require 'slam'
+require 'necromancy'
 
-describe Slam::Arrow::Dunk do
+describe Necromancy::Arrow::Dunk do
 
   let(:l) { described_class.new }
 

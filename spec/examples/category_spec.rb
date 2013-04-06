@@ -1,7 +1,7 @@
-require 'slam'
+require 'necromancy'
 
-class CategoryDunk < Slam::Dunk
-  include ::Slam::Category
+class CategoryDunk < Necromancy::Dunk
+  include ::Necromancy::Category
 end
 
 describe CategoryDunk do

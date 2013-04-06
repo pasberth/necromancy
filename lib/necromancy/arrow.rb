@@ -1,8 +1,8 @@
-require 'slam'
-require 'slam/ext'
-require 'slam/category'
+require 'necromancy'
+require 'necromancy/ext'
+require 'necromancy/category'
 
-module Slam
+module Necromancy
 
   module Arrow; extend Ext
 

@@ -1,7 +1,7 @@
-require 'slam'
-require 'slam/ext'
+require 'necromancy'
+require 'necromancy/ext'
 
-module Slam
+module Necromancy
 
   module Applicative; extend Ext
 

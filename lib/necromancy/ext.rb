@@ -1,4 +1,4 @@
-module Slam
+module Necromancy
 
   module Ext
 
@@ -31,7 +31,7 @@ module Slam
     def const_missing(name)
       mod = self
       if name == :Dunk
-        Class.new(::Slam::Dunk) { include mod }
+        Class.new(::Necromancy::Dunk) { include mod }
       else
         super
       end

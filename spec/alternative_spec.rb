@@ -1,7 +1,7 @@
-require 'slam'
+require 'necromancy'
 
-class AlternativeDunk < Slam::Dunk
-  include ::Slam::Alternative
+class AlternativeDunk < Necromancy::Dunk
+  include ::Necromancy::Alternative
 end
 
 describe AlternativeDunk do

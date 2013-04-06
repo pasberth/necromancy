@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = "slam"
+  s.name = "necromancy"
   s.version = File.read("VERSION")
   s.authors = ["pasberth"]
   s.description = %{Symbol-LAMbda hacks}

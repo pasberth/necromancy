@@ -1,6 +1,6 @@
-require 'slam'
+require 'necromancy'
 
-L = Slam::Alternative.using(:<< => :if,
+L = Necromancy::Alternative.using(:<< => :if,
                             :>> => :then,
                             :|  => :else)::Dunk.new
 puts (1..100).map &( (L%15).zero? .then(proc{"FizzBuzz"}) .else   \

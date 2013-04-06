@@ -1,4 +1,4 @@
-require 'slam'
+require 'necromancy'
 
 class TestStr < String
 
@@ -11,7 +11,7 @@ class TestStr < String
   end
 end
 
-describe Slam::Dunk do
+describe Necromancy::Dunk do
 
   let(:l) { described_class.new }
 

@@ -1,4 +1,4 @@
-module Slam
+module Necromancy
 
   class Dunk < BasicObject
 

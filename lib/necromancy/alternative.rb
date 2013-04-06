@@ -1,11 +1,11 @@
-require 'slam'
-require 'slam/ext'
+require 'necromancy'
+require 'necromancy/ext'
 
-module Slam
+module Necromancy
 
   module Alternative; extend Ext
 
-    include Slam::Applicative
+    include Necromancy::Applicative
 
     def empty?(alternative)
       not alternative
