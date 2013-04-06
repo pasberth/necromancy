@@ -93,8 +93,9 @@ ________________________________________________________________________________
 .. code:: ruby
 
   N = Necromancy.Alternative.new
-  str_or_nil = ["foo", nil].sample
-  str_or_nil.tap &N >> N.upcase! # => nil or "FOO"
+  n = N >> N.upcase!
+  "foo".tap &n # => "FOO"
+  nil.tap &n # => nil
 
 Alias importation
 ________________________________________________________________________________
