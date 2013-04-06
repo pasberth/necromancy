@@ -7,7 +7,7 @@ module Slam
 
     def &(callable)
       id = callable.to_proc.__id__
-      necromancy = "[*(#@necromancy), ObjectSpace._id2ref(#{id}).(*args)]"
+      necromancy = "[*(#@necromancy), ::ObjectSpace._id2ref(#{id}).(*args)]"
       self.class.new(necromancy)
     end
   end
