@@ -14,18 +14,23 @@ module Slam
     protected :empty?
 
     def *(callable) 
-      empty_mth = ->(*args) { empty?(*args) }
-      @avoid_gc << empty_mth
+      unless defined? @empty_mth
+        @empty_mth = ->(*args) { empty?(*args) }
+        @avoid_gc << @empty_mth
+      end
       str = make_evaluable_string(callable)
-      necromancy = "ObjectSpace._id2ref(#{empty_mth.__id__}).(*((#{str}).tap{|xs| stack << xs})) ? stack.pop : (xs = stack.pop + xs; #@necromancy)"
+      necromancy = "ObjectSpace._id2ref(#{@empty_mth.__id__}).(*(_xs = (#{str}))) ? _xs : (xs = _xs + xs; #@necromancy)"
       self.class.new(necromancy)
     end
 
     def |(callable)
-      empty_mth = ->(*args) { empty?(*args) }
+      unless defined? @empty_mth
+        @empty_mth = ->(*args) { empty?(*args) }
+        @avoid_gc << @empty_mth
+      end
       @avoid_gc << empty_mth
       str = make_evaluable_string(callable)
-      necromancy = "ObjectSpace._id2ref(#{empty_mth.__id__}).(*((#@necromancy).tap{|xs|stack << xs})) ? (stack.pop; #{str}) : stack.pop"
+      necromancy = "ObjectSpace._id2ref(#{@empty_mth.__id__}).(*(_xs = #@necromancy)) ? (#{str}) : _xs"
       self.class.new(necromancy)
     end
   end

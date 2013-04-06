@@ -20,7 +20,7 @@ module Slam
     end
 
     def to_proc
-      ::TOPLEVEL_BINDING.eval("->(*args) { xs = []; stack = []; ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy))  }")
+      ::TOPLEVEL_BINDING.eval("->(*args) { xs = []; ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy)) }")
     end
 
     def class
