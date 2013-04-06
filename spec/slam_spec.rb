@@ -11,7 +11,7 @@ class TestStr < String
   end
 end
 
-describe Necromancy::Necromancy do
+describe Necromancy do
 
   let(:l) { described_class.new }
 

@@ -1,10 +1,6 @@
 require 'necromancy'
 
-class ArrowNecromancy < Necromancy::Necromancy
-  include ::Necromancy::Arrow
-end
-
-describe ArrowNecromancy do
+describe Necromancy::Arrow do
 
   let(:l) { described_class.new }
 

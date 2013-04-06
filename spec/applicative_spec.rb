@@ -1,10 +1,6 @@
 require 'necromancy'
 
-class ApplicativeNecromancy < Necromancy::Necromancy
-  include ::Necromancy::Applicative
-end
-
-describe ApplicativeNecromancy do
+describe Necromancy::Applicative do
 
   let(:l) { described_class.new }
 

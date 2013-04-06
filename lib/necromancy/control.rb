@@ -2,6 +2,11 @@ module Necromancy
 
   module Control
 
+    def new
+      mod = self
+      Class.new(::Necromancy::Necromancy) { include mod }.new
+    end
+
     def branch(&block)
       mod = self
       Module.new { include mod; extend Control; module_eval(&block) }
@@ -26,15 +31,6 @@ module Necromancy
 
     def hiding(*names)
       branch { protected *names }
-    end
-
-    def const_missing(name)
-      mod = self
-      if name == :Necromancy
-        Class.new(::Necromancy::Necromancy) { include mod }
-      else
-        super
-      end
     end
   end
 end

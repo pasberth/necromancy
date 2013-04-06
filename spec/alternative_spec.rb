@@ -1,10 +1,6 @@
 require 'necromancy'
 
-class AlternativeNecromancy < Necromancy::Necromancy
-  include ::Necromancy::Alternative
-end
-
-describe AlternativeNecromancy do
+describe Necromancy::Alternative do
 
   let(:l) { described_class.new }
   shared_examples_for "pure" do

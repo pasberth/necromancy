@@ -1,10 +1,6 @@
 require 'necromancy'
 
-class CategoryNecromancy < Necromancy::Necromancy
-  include ::Necromancy::Category
-end
-
-describe CategoryNecromancy do
+describe Necromancy::Category do
 
   let(:l) { described_class.new }
 
