@@ -69,7 +69,7 @@ module Slam
         references = anyref.instance_eval {@references}
         necromancy = anyref.instance_eval {@necromancy}
         @references.concat(references)
-        "i += #{references.size}; xs = (#{necromancy}); i -= #{references.size}; xs"
+        "stack << i; i = #{references.size}; xs = (#{necromancy}); i = stack.pop; xs"
       when ::Symbol
         "[:#{anyref}.to_proc.(*args)]"
       else
