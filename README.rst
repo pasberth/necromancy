@@ -94,7 +94,43 @@ ________________________________________________________________________________
 
   N = Necromancy.Alternative.new
   str_or_nil = ["foo", nil].sample
-  str_or_nil.tap &N >> N.upsace! # => nil or "FOO"
+  str_or_nil.tap &N >> N.upcase! # => nil or "FOO"
+
+Alias importation
+________________________________________________________________________________
+
+.. code:: ruby
+
+  N = Necromancy.Alternative.using(:>> => :then).new
+  str_or_nil = ["foo", nil].sample
+  str_or_nil.tap &(N.then N.upcase!) # => nil or "FOO"
+
+Hiding importation
+________________________________________________________________________________
+
+.. code:: ruby
+
+  N = Necromancy.Alternative.hiding(:*, :**).new
+  (1..5).map &N ** 2 # => [1, 4, 9, 16, 25]
+
+Specifying importation
+________________________________________________________________________________
+
+.. code:: ruby
+
+  N = Necromancy.Alternative.(:>>).new
+  str_or_nil = ["foo", nil].sample
+  str_or_nil.tap &N >> N.upcase! # => nil or "FOO"
+  (1..5).map &N ** 2 # => [1, 4, 9, 16, 25]
+
+Multiple module importation
+________________________________________________________________________________
+
+.. code:: ruby
+
+  N = Necromancy.Arrow.Alternative.hiding(:*, :**).new
+  [nil, 42, "foo"].map &N.is_a?(Integer) >> (N * 2 & N ** 2) | N # => [nil, [84, 1764], "foo"]
+
 
 Installation
 --------------------------------------------------------------------------------

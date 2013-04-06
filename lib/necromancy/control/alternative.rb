@@ -8,8 +8,8 @@ module Necromancy
 
     include Control::Applicative
 
-    def empty?(alternative)
-      not alternative
+    def empty?(*xs)
+      xs.none?
     end
 
     protected :empty?
