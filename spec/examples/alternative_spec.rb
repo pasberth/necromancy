@@ -23,4 +23,14 @@ describe Slam::Alternative::Dunk do
     (1..5).map(&l.odd? >> l.succ | l.pred).
       should == [2, 1, 4, 3, 6]
   end
+
+  example do
+    [{x: 1}, {y: 2}].inject(&l.merge << ->(x,y){x&&y}).
+      should == {x: 1, y: 2}
+  end
+
+  example do
+    [{x: 1}, nil, {y: 2}].inject(&l.merge << ->(x,y){x&&y}).
+      should be_nil
+  end
 end
