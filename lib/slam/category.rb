@@ -7,13 +7,14 @@ module Slam
 
     def >(callable)
       id = callable.to_proc.__id__
-      necromancy = "[*::ObjectSpace._id2ref(#{id}).(*(#@necromancy))]"
+      str = make_evaluable_string(callable)
+      necromancy = "args = (#@necromancy); #{str}"
       self.class.new(necromancy, [self])
     end
 
     def <(callable)
-      id = callable.to_proc.__id__
-      necromancy = "args = [::ObjectSpace._id2ref(#{id}).(*args)]; #@necromancy"
+      str = make_evaluable_string(callable)
+      necromancy = "args = #{str}; #@necromancy"
       self.class.new(necromancy, [self])
     end
   end
