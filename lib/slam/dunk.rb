@@ -32,7 +32,7 @@ module Slam
     end
 
     def to_proc
-      instance_eval("->(*args) { ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy)) }")
+      instance_eval("->(*args) { xs = (#@necromancy); xs.size == 1 ? xs.first : xs }")
     end
 
     def class
