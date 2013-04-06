@@ -16,6 +16,7 @@ describe ApplicativeDunk do
     example { proc(&l >> f * l).(r).should == proc(&f).(r, proc(&l).(r)) }
     example { proc(&g << l).(r).should == proc(&g).(r) }
     example { proc(&f * l << l).(r).should == proc(&f).(r, proc(&l).(r)) }
+    pending { proc(&h * l * l).(r).should == proc(&f).(r, proc(&l).(r), proc(&l).(r)) }
   end
 
   it_behaves_like "an Applicative" do
