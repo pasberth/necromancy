@@ -6,15 +6,17 @@ module Slam
   module Applicative; extend Ext
 
     def **(callable)
-      self.class.new(->(g, *xs) { ->(*ys) { g.(callable.to_proc.(*xs, *ys)) } }) * self
+      str = make_evaluable_string(callable)
+      self.class.new(str) * self
     end
 
     def <<(callable)
-      self.class.new(->(g, *xs) {->(x, y){g.(x)}}) * self * callable
+      self.class.new("xs.shift; #@necromancy") * callable
     end
 
     def >>(callable)
-      self.class.new(->(g, *xs) {->(x, y){g.(y)}}) * self * callable
+      str = make_evaluable_string(callable)
+      self.class.new("xs.shift; #{str}") * self
     end
   end
 end

@@ -5,11 +5,11 @@ module Slam
     protected *instance_methods
     protected
 
-    def initialize(necromancy = "args", *args, &block)
-      $stdout.puts([necromancy, args].inspect)
+    def initialize(necromancy = "[*args, *xs]", *args, &block)
       @necromancy = necromancy
       @args = args
       @block = block
+      @avoid_gc = []
     end
 
     def method_missing(name, *args, &block)
@@ -20,11 +20,22 @@ module Slam
     end
 
     def to_proc
-      ::TOPLEVEL_BINDING.eval("->(*args) { ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy))  }")
+      ::TOPLEVEL_BINDING.eval("->(*args) { xs = []; stack = []; ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy))  }")
     end
 
     def class
       @class ||= (class << self; self end).superclass
+    end
+
+    def make_evaluable_string(anyref)
+      case anyref
+      when Dunk
+        anyref.instance_eval {@necromancy}
+      else
+        prc = anyref.to_proc
+        @avoid_gc << prc
+        "[::ObjectSpace._id2ref(#{prc.__id__}).(*args, *xs)]"
+      end
     end
   end
 end

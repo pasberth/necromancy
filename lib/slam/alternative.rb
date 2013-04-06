@@ -8,19 +8,25 @@ module Slam
     include Slam::Applicative
 
     def empty?(alternative)
-      !alternative
+      not alternative
     end
 
     protected :empty?
 
-    def *(callable)
-      f = ->(g, *xs, &block; f) { f = @callable.(->(x){x}, *xs, &block); empty?(x = callable.to_proc.(*xs, &block)) ? ->(*ys) { g.(x) } : ->(*ys) { g.(f.(x, *ys)) } }
-      self.class.new(f)
+    def *(callable) 
+      empty_mth = ->(*args) { empty?(*args) }
+      @avoid_gc << empty_mth
+      str = make_evaluable_string(callable)
+      necromancy = "ObjectSpace._id2ref(#{empty_mth.__id__}).(*((#{str}).tap{|xs| stack << xs})) ? stack.pop : (xs = stack.pop + xs; #@necromancy)"
+      self.class.new(necromancy)
     end
 
     def |(callable)
-      f = ->(g, *xs, &block) { ->(*ys) { empty?(x = to_proc.(*xs, *ys, &block)) ? g.(callable.to_proc.(*xs, *ys, &block)) : g.(x) } }
-      self.class.new(f)
+      empty_mth = ->(*args) { empty?(*args) }
+      @avoid_gc << empty_mth
+      str = make_evaluable_string(callable)
+      necromancy = "ObjectSpace._id2ref(#{empty_mth.__id__}).(*((#@necromancy).tap{|xs|stack << xs})) ? (stack.pop; #{str}) : stack.pop"
+      self.class.new(necromancy)
     end
   end
 end
