@@ -14,6 +14,8 @@ describe ArrowDunk do
     example { proc(&l & l & l & l).(r).should == [proc(&l).(r), proc(&l).(r), proc(&l).(r), proc(&l).(r)] }
     example { proc(&l & l > f).(r).should == proc(&f).(proc(&l).(r), proc(&l).(r)) }
     example { proc(&l & l > ga * gb).(r).should == [proc(&ga).(proc(&l).(r)), proc(&gb).(proc(&l).(r))] }
+    example { proc(&l & l & l > ga * gb * ga).(r).should == [proc(&ga).(proc(&l).(r)), proc(&gb).(proc(&l).(r)), proc(&ga).(proc(&l).(r))] }
+    example { proc(&l & l & l & l > ga * gb * ga * gb).(r).should == [proc(&ga).(proc(&l).(r)), proc(&gb).(proc(&l).(r)), proc(&ga).(proc(&l).(r)), proc(&gb).(proc(&l).(r))] }
   end
 
   it_behaves_like "an Arrow" do
