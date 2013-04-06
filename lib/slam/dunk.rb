@@ -32,7 +32,7 @@ module Slam
     end
 
     def to_proc
-      instance_eval("->(*args) { xs = (#{@necromancy}); xs.size == 1 ? xs.first : xs }")
+      instance_eval("->(*args) { i = 0; xs = (#{@necromancy}); xs.size == 1 ? xs.first : xs }")
     end
 
     def class
@@ -59,20 +59,23 @@ module Slam
         anyref.inspect
       else
         i = add_val(anyref)
-        "self.get_ref(#{i})"
+        "self.get_ref(i + #{i})"
       end
     end
 
     def make_evaluable_string(anyref)
       case anyref
       when Dunk
-        anyref.instance_eval {@necromancy}
+        references = anyref.instance_eval {@references}
+        necromancy = anyref.instance_eval {@necromancy}
+        @references.concat(references)
+        "i += #{references.size}; xs = (#{necromancy}); i -= #{references.size}; xs"
       when ::Symbol
         "[:#{anyref}.to_proc.(*args)]"
       else
         prc = anyref.to_proc
         i = add_val(prc)
-        "[self.get_ref(#{i}).(*args)]"
+        "[self.get_ref(i + #{i}).(*args)]"
       end
     end
   end
