@@ -6,8 +6,9 @@ module Slam
   module Arrow; extend Ext
 
     def &(callable)
-      f = ->(g, *xs, &block) { ->(*ys) { @callable.(->(*r){ g.(*r, callable.to_proc.(*xs, *ys, &block)) }, *xs, *ys, &block).() } }
-      self.class.new(f)
+      id = callable.to_proc.__id__
+      necromancy = "[*(#@necromancy), ObjectSpace._id2ref(#{id}).(*args)]"
+      self.class.new(necromancy)
     end
   end
 end
