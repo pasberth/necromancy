@@ -20,7 +20,7 @@ module Slam
       end
       str = make_evaluable_string(callable)
       necromancy = "::ObjectSpace._id2ref(#{@empty_mth.__id__}).(*(xs = (#{str}))) ? xs : (args.concat(xs); #@necromancy)"
-      self.class.new(necromancy)
+      self.class.new(necromancy, [self])
     end
 
     def |(callable)
@@ -30,7 +30,7 @@ module Slam
       end
       str = make_evaluable_string(callable)
       necromancy = "::ObjectSpace._id2ref(#{@empty_mth.__id__}).(*(xs = #@necromancy)) ? (#{str}) : xs"
-      self.class.new(necromancy)
+      self.class.new(necromancy, [self])
     end
   end
 end

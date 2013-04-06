@@ -5,18 +5,31 @@ module Slam
     protected *instance_methods
     protected
 
-    def initialize(necromancy = "args", *args, &block)
+    def initialize(necromancy = "args", avoid_gc = [])
       @necromancy = necromancy
-      @args = args
-      @block = block
-      @avoid_gc = []
+      @avoid_gc = avoid_gc
     end
 
     def method_missing(name, *args, &block)
-      getargs = args.map{|x|"::ObjectSpace._id2ref(#{x.__id__}),"}.join
-      getblock = "::ObjectSpace._id2ref(#{block.__id__})"
-      necromancy = "[:#{name}.to_proc.(*(#@necromancy), #{getargs} &(#{getblock}))]"
-      self.class.new(necromancy)
+      avoid_gc = [self]
+      getproc = ":#{name}.to_proc"
+
+      if args.none?
+        getargs = nil
+      else
+        getargs = ", *(::ObjectSpace._id2ref(#{args.__id__}))"
+        avoid_gc << args
+      end
+
+      if block
+        getblock = ", &(::ObjectSpace._id2ref(#{block.__id__}))"
+        avoid_gc << block
+      else
+        getblock = nil
+      end
+
+      necromancy = "[#{getproc}.(*(#@necromancy)#{getargs}#{getblock})]"
+      self.class.new(necromancy, avoid_gc)
     end
 
     def to_proc
