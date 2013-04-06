@@ -27,12 +27,12 @@ module Slam
         getblock = nil
       end
 
-      necromancy = "[#{getproc}.(*(#@necromancy)#{getargs}#{getblock})]"
+      necromancy = "[#{getproc}.(*(#{@necromancy})#{getargs}#{getblock})]"
       self.class.new(necromancy, [self])
     end
 
     def to_proc
-      instance_eval("->(*args) { xs = (#@necromancy); xs.size == 1 ? xs.first : xs }")
+      instance_eval("->(*args) { xs = (#{@necromancy}); xs.size == 1 ? xs.first : xs }")
     end
 
     def class

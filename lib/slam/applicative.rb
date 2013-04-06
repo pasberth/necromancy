@@ -11,7 +11,7 @@ module Slam
     end
 
     def <<(callable)
-      self.class.new("args.pop; #@necromancy") * callable
+      self.class.new("args.pop; #{@necromancy}") * callable
     end
 
     def >>(callable)

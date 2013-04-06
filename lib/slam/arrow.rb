@@ -8,7 +8,7 @@ module Slam
     def &(callable)
       id = callable.to_proc.__id__
       str = make_evaluable_string(callable)
-      necromancy = "[*(#@necromancy), *(#{str})]"
+      necromancy = "[*(#{@necromancy}), *(#{str})]"
       self.class.new(necromancy, [self])
     end
   end
