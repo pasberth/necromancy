@@ -1,6 +1,6 @@
 require 'necromancy'
 
-describe Necromancy::Arrow do
+describe Necromancy::Control::Arrow do
 
   let(:l) { described_class.new }
 

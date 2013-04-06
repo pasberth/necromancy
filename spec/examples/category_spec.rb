@@ -1,6 +1,6 @@
 require 'necromancy'
 
-describe Necromancy::Category do
+describe Necromancy::Control::Category do
 
   let(:l) { described_class.new }
 

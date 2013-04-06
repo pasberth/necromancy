@@ -1,6 +1,6 @@
 require 'necromancy'
 
-describe Necromancy::Alternative do
+describe Necromancy::Control::Alternative do
 
   let(:l) { described_class.new }
   shared_examples_for "pure" do

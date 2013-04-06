@@ -3,7 +3,7 @@ require 'necromancy/control'
 
 module Necromancy
 
-  module Category; extend Control
+  module Control::Category; extend Control
 
     def >(callable)
       str = make_evaluable_string(callable)

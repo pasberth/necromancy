@@ -1,12 +1,12 @@
 require 'necromancy'
 require 'necromancy/control'
-require 'necromancy/category'
+require 'necromancy/control/category'
 
 module Necromancy
 
-  module Arrow; extend Control
+  module Control::Arrow; extend Control
 
-    include Category
+    include Control::Category
 
     def &(callable)
       str = make_evaluable_string(callable)

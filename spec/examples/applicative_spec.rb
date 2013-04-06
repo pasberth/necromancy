@@ -1,6 +1,6 @@
 require 'necromancy'
 
-describe Necromancy::Applicative do
+describe Necromancy::Control::Applicative do
 
   let(:l) { described_class.new }
 

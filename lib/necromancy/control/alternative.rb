@@ -1,11 +1,12 @@
 require 'necromancy'
 require 'necromancy/control'
+require 'necromancy/control/applicative'
 
 module Necromancy
 
-  module Alternative; extend Control
+  module Control::Alternative; extend Control
 
-    include Applicative
+    include Control::Applicative
 
     def empty?(alternative)
       not alternative
