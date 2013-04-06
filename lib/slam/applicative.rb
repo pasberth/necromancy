@@ -7,16 +7,16 @@ module Slam
 
     def **(callable)
       str = make_evaluable_string(callable)
-      self.class.new(str, [self]) * self
+      self.class.new(str, @references) * self
     end
 
     def <<(callable)
-      self.class.new("args.pop; #{@necromancy}") * callable
+      self.class.new("args.pop; #{@necromancy}", @references) * callable
     end
 
     def >>(callable)
       str = make_evaluable_string(callable)
-      self.class.new("args.pop; #{str}", [self]) * self
+      self.class.new("args.pop; #{str}", @references) * self
     end
   end
 end

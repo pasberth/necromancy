@@ -5,9 +5,9 @@ module Slam
     protected *instance_methods
     protected
 
-    def initialize(necromancy = "args", avoid_gc = [])
+    def initialize(necromancy = "args", references = [])
       @necromancy = necromancy
-      @avoid_gc = avoid_gc
+      @references = references
     end
 
     def method_missing(name, *args, &block)
@@ -28,7 +28,7 @@ module Slam
       end
 
       necromancy = "[#{getproc}.(*(#{@necromancy})#{getargs}#{getblock})]"
-      self.class.new(necromancy, [self])
+      self.class.new(necromancy, @references)
     end
 
     def to_proc
@@ -39,13 +39,27 @@ module Slam
       @class ||= (class << self; self end).superclass
     end
 
+    def get_ref(i)
+      @references[i]
+    end
+
+    def set_ref(i, v)
+      @references[i] = v
+    end
+
+    def add_val(v)
+      i = @references.size
+      @references[i] = v
+      i
+    end
+
     def make_evaluable_literal(anyref)
       case anyref
       when nil, ::Integer, ::Float, ::Symbol
         anyref.inspect
       else
-        @avoid_gc << anyref
-        "::ObjectSpace._id2ref(#{anyref.__id__})"
+        i = add_val(anyref)
+        "self.get_ref(#{i})"
       end
     end
 
@@ -57,8 +71,8 @@ module Slam
         "[:#{anyref}.to_proc.(*args)]"
       else
         prc = anyref.to_proc
-        @avoid_gc << prc
-        "[::ObjectSpace._id2ref(#{prc.__id__}).(*args)]"
+        i = add_val(prc)
+        "[self.get_ref(#{i}).(*args)]"
       end
     end
   end
