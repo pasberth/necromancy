@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.summary = %q{experimental release}
   s.email = "pasberth@gmail.com"
   s.homepage = "http://github.com/pasberth/necromancy"
+  s.license = 'MIT'
   s.require_paths = ["lib"]
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- spec/*`.split("\n")
