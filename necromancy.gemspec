@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description = %{Necromancy conjures up the functional code.}
   s.summary = %q{experimental release}
   s.email = "pasberth@gmail.com"
-  s.homepage = "http://github.com/pasberth/necromancy"
+  s.homepage = "https://github.com/pasberth/necromancy"
   s.license = 'MIT'
   s.require_paths = ["lib"]
   s.files = `git ls-files`.split("\n")
