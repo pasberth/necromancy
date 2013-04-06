@@ -5,7 +5,7 @@ module Slam
     protected *instance_methods
     protected
 
-    def initialize(necromancy = "[*args, *xs]", *args, &block)
+    def initialize(necromancy = "args", *args, &block)
       @necromancy = necromancy
       @args = args
       @block = block
@@ -20,7 +20,7 @@ module Slam
     end
 
     def to_proc
-      ::TOPLEVEL_BINDING.eval("->(*args) { xs = []; ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy)) }")
+      ::TOPLEVEL_BINDING.eval("->(*args) { ->(*xs){xs.size==1 ? xs.first : xs}.(*(#@necromancy)) }")
     end
 
     def class
@@ -34,7 +34,7 @@ module Slam
       else
         prc = anyref.to_proc
         @avoid_gc << prc
-        "[::ObjectSpace._id2ref(#{prc.__id__}).(*args, *xs)]"
+        "[::ObjectSpace._id2ref(#{prc.__id__}).(*args)]"
       end
     end
   end

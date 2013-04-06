@@ -11,12 +11,12 @@ module Slam
     end
 
     def <<(callable)
-      self.class.new("xs.shift; #@necromancy") * callable
+      self.class.new("args.pop; #@necromancy") * callable
     end
 
     def >>(callable)
       str = make_evaluable_string(callable)
-      self.class.new("xs.shift; #{str}") * self
+      self.class.new("args.pop; #{str}") * self
     end
   end
 end
