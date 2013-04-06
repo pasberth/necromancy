@@ -5,7 +5,7 @@ module Necromancy
 
   module Alternative; extend Control
 
-    include Necromancy::Applicative
+    include Applicative
 
     def empty?(alternative)
       not alternative

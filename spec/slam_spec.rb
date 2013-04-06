@@ -11,11 +11,11 @@ class TestStr < String
   end
 end
 
-describe Necromancy::Dunk do
+describe Necromancy::Necromancy do
 
   let(:l) { described_class.new }
 
-  shared_examples_for "a Dunk" do
+  shared_examples_for "a Necromancy" do
 
     example { proc(&l.f).(r).should == r.f  }
     example { proc(&l.g(x)).(r).should == r.g(x)  }
@@ -25,7 +25,7 @@ describe Necromancy::Dunk do
     example { proc(&l.g(x) . g(x)).(r).should == r.g(x).g(x)  }
   end
 
-  it_behaves_like "a Dunk" do
+  it_behaves_like "a Necromancy" do
 
     let(:r) { TestStr.new 'hoge' }
     let(:x) { 'fuga' }

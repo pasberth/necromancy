@@ -1,10 +1,10 @@
 require 'necromancy'
 
-class AlternativeDunk < Necromancy::Dunk
+class AlternativeNecromancy < Necromancy::Necromancy
   include ::Necromancy::Alternative
 end
 
-describe AlternativeDunk do
+describe AlternativeNecromancy do
 
   let(:l) { described_class.new }
   shared_examples_for "pure" do

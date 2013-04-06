@@ -1,6 +1,6 @@
 require 'necromancy'
 
-describe Necromancy::Dunk do
+describe Necromancy::Necromancy do
 
   let(:l) { described_class.new }
 

@@ -30,8 +30,8 @@ module Necromancy
 
     def const_missing(name)
       mod = self
-      if name == :Dunk
-        Class.new(::Necromancy::Dunk) { include mod }
+      if name == :Necromancy
+        Class.new(::Necromancy::Necromancy) { include mod }
       else
         super
       end

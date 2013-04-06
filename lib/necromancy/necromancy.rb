@@ -1,6 +1,6 @@
 module Necromancy
 
-  class Dunk < BasicObject
+  class Necromancy < BasicObject
 
     protected *instance_methods
     protected
@@ -65,7 +65,7 @@ module Necromancy
 
     def make_evaluable_string(anyref)
       case anyref
-      when Dunk
+      when Necromancy
         references = anyref.instance_eval {@references}
         necromancy = anyref.instance_eval {@necromancy}
         @references.concat(references)
