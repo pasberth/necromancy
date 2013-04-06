@@ -20,7 +20,7 @@ module Necromancy
 
     def using(*targets)
       names = targets.select { |t| t.is_a? Symbol }
-      aliases = targets.select { |t| t.is_a? Hash }.inject(:merge)
+      aliases = targets.select { |t| t.is_a? Hash }.inject(:merge) || {}
       branch do
         public *names
         aliases.each do |org, als|
