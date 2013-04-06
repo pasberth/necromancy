@@ -1,5 +1,6 @@
 module Necromancy
 
+  require 'necromancy/version'
   require 'necromancy/necromancy'
   require 'necromancy/control'
   require 'necromancy/control/category'

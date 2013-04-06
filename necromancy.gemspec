@@ -1,6 +1,8 @@
+version = File.read("VERSION").chomp
+`perl -i -pe 's/VERSION = "[\\d\\.]+"/VERSION = "#{version}"/' lib/necromancy/version.rb`
 Gem::Specification.new do |s|
   s.name = "necromancy"
-  s.version = File.read("VERSION")
+  s.version = version
   s.authors = ["pasberth"]
   s.description = %{Necromancy conjures up the functional code.}
   s.summary = %q{experimental release}
