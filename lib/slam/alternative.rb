@@ -16,13 +16,13 @@ module Slam
     def *(callable) 
       str = make_evaluable_string(callable)
       necromancy = "self.empty?(*(xs = (#{str}))) ? xs : (args.concat(xs); #{@necromancy})"
-      self.class.new(necromancy, @references)
+      self.class.new(necromancy, @references.dup)
     end
 
     def |(callable)
       str = make_evaluable_string(callable)
       necromancy = "self.empty?(*(xs = (#{@necromancy}))) ? (#{str}) : xs"
-      self.class.new(necromancy, @references)
+      self.class.new(necromancy, @references.dup)
     end
   end
 end
