@@ -19,10 +19,18 @@ module Necromancy
 Necromancy.Hoge.() deprecated.
 Use Necromancy.Hoge().
 EOF
-      branch { protected *instance_methods }.using(*targets)
+      branch { protected *instance_methods }[*targets]
     end
 
     def using(*targets)
+      warn <<EOF
+Necromancy.Hoge.using() deprecated.
+Use Necromancy.Hoge[].
+EOF
+      self[*targets]
+    end
+
+    def [](*targets)
       names = targets.select { |t| t.is_a? Symbol }
       aliases = targets.select { |t| t.is_a? Hash }.inject(:merge) || {}
       branch do
@@ -47,7 +55,7 @@ EOF
         if args.empty?
           branch { include mod }
         else
-          branch { include mod; protected *mod.instance_methods }.using(*args, &block)
+          branch { include mod; protected *mod.instance_methods }[*args, &block]
         end
       else
         super
