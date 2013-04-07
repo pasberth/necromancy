@@ -59,7 +59,7 @@ and you can call their methods by sending some messages to a Necromancy object.
 Examples
 --------------------------------------------------------------------------------
 
-Simple Function composion
+Simple function composition
 ________________________________________________________________________________
 
 First, you create a `Necromancy` object.
@@ -76,7 +76,7 @@ After, you send some message to N when you need to write a simple block.
 
   (1..5).map &N ** 2 # => [1, 4, 9, 16, 25]
 
-Function composion
+Function composition
 ________________________________________________________________________________
 
 .. code:: ruby
