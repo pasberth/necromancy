@@ -119,7 +119,7 @@ ________________________________________________________________________________
 
 .. code:: ruby
 
-  N = Necromancy.Alternative.(:>>).new
+  N = Necromancy.Alternative(:>>).new
   str_or_nil = ["foo", nil].sample
   str_or_nil.tap &N >> N.upcase! # => nil or "FOO"
   (1..5).map &N ** 2 # => [1, 4, 9, 16, 25]

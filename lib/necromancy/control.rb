@@ -15,6 +15,10 @@ module Necromancy
     private :branch
 
     def call(*targets)
+      warn <<EOF
+Necromancy.Hoge.() deprecated.
+Use Necromancy.Hoge().
+EOF
       branch { protected *instance_methods }.using(*targets)
     end
 
@@ -38,7 +42,13 @@ module Necromancy
     def method_missing(name, *args, &block)
       super unless ('A'..'Z').include? name[0]
       if ::Necromancy::Control.const_defined? name
-        branch { include ::Necromancy::Control.const_get(name) }
+        mod = ::Necromancy::Control.const_get(name)
+
+        if args.empty?
+          branch { include mod }
+        else
+          branch { include mod; protected *mod.instance_methods }.using(*args, &block)
+        end
       else
         super
       end
