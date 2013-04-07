@@ -35,7 +35,7 @@ module Necromancy
       mkvariables = @references.size.times.map {|i| "@_#{i} = self.get_ref(#{i})" }.join(';')
       instance_eval(<<-NECROMANCY)
         #{mkvariables};
-        ->(*args) { i = 0; stack = []; xs = (#{@necromancy}); xs.size == 1 ? xs.first : xs }
+        ->(*args) { stack = []; xs = (#{@necromancy}); xs.size == 1 ? xs.first : xs }
       NECROMANCY
     end
 
