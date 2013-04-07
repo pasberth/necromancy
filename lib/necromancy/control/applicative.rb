@@ -36,6 +36,7 @@ module Necromancy
     # @note self :: a -> b
     # @param [Object] callable a -> _
     # @return [Necromancy] a -> b
+    # @example
     #   require 'necromancy'
     #   N = Necromancy.Applicative.new
     #   f = lambda(&N.succ << N.pred) # == ->(o) {o.pred; o.succ}
@@ -48,6 +49,7 @@ module Necromancy
     # @note self :: a -> _
     # @param [Object] callable a -> b
     # @return [Necromancy] a -> b
+    # @example
     #   require 'necromancy'
     #   N = Necromancy.Applicative.new
     #   f = lambda(&N.succ >> N.pred) # == ->(o) {o.succ; o.pred}

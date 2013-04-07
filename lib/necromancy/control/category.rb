@@ -10,8 +10,10 @@ module Necromancy
     # @param [Object] callable b -> c
     # @return [Necromancy] a -> c
     # @example
-    #   lambda(&N.to_i > N * 2).('42').
-    #     should == '42'.to_i * 2
+    #   require 'necromancy'
+    #   N = Necromancy.Category.new
+    #   f = lambda(&N.to_i > N * 2) # == ->(o) { o.to_i * 2 }
+    #   f.('42') # => 84
     def >(callable)
       str = make_evaluable_string(callable)
       necromancy = "args = (#{@necromancy}); #{str}"
@@ -23,8 +25,10 @@ module Necromancy
     # @param [Object] callable a -> b
     # @return [Necromancy] a -> c
     # @example
-    #   lambda(&N.to_i < N * 2).('42').
-    #     should == ('42' * 2).to_i
+    #   require 'necromancy'
+    #   N = Necromancy.Category.new
+    #   f = lambda(&N.to_i < N * 2) # == ->(o) { (o * 2).to_i }
+    #   f.('42') # => 4242
     def <(callable)
       str = make_evaluable_string(callable)
       necromancy = "args = (#{str}); #{@necromancy}"

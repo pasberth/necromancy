@@ -39,6 +39,14 @@ EOF
     # @param [Hash]   target Hides all methods of each key and creates aliases from each value to each key.
     # @param [Array]  targets A list of Symbol or Hash that will be processing as target.
     # @return [Control] Processed new {Necromancy::Control} object.
+    # @example
+    #   require 'necromancy'
+    #   N = Necromancy.Alternative[:<< => :if,
+    #                              :>> => :then,
+    #                              :|  => :else].new
+    #   puts (1..100).map &( (N%15).zero? .then(proc{"FizzBuzz"}) .else   \
+    #                        (N%3).zero?  .then(proc{"Fizz"})     .else   \
+    #                        (N%5).zero?  .then(proc{"Buzz"})     .else N )
     def [](target, *targets)
       targets.unshift(target)
       names = targets.select { |t| t.is_a? Symbol }
@@ -57,6 +65,11 @@ EOF
     # @param [Symbol] name Hides a method of the name.
     # @param [Array]  names A list of a Symbol that will be processing as name.
     # @return [Control] Processed new {Necromancy::Control} object.
+    # @example
+    #   require 'necromancy'
+    #   N = Necromancy.Alternative.hiding(:*, :**).new
+    #   ary = [1, nil, 2, nil, 3]
+    #   ary.map &(N | proc{0}) * 10 # => [10, 0, 20, 0, 3]
     def hiding(name, *names)
       names.unshift(name)
       branch { protected *names }
