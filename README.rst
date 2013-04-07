@@ -41,12 +41,20 @@ their arguments are given into that function each time.
 
 Rich extensions.
 ________________________________________________________________________________
+
 If you want, you can use extensions by clojuring up the evil spirit.
 
 .. code:: ruby
 
   M = Necromancy.Alternative.new
   M.x | M.y == ->(o) { o.x || o.y }
+
+No core extensions.
+________________________________________________________________________________
+
+Open classes is evil unless that is need really!
+Necromancy isn't. All methods are defining at local modules,
+and you can call their methods by sending some messages to a Necromancy object.
 
 Examples
 --------------------------------------------------------------------------------
