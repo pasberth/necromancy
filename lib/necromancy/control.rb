@@ -47,18 +47,15 @@ EOF
       branch { protected *names }
     end
 
-    def method_missing(name, *args, &block)
-      super unless ('A'..'Z').include? name[0]
-      if ::Necromancy::Control.const_defined? name
-        mod = ::Necromancy::Control.const_get(name)
-
+    def self.extended(mod)
+      return unless mod.name and mod.name.start_with? self.name
+      mthname = mod.name.sub("#{self.name}::", '')
+      define_method mthname do |*args, &block|
         if args.empty?
           branch { include mod }
         else
           branch { include mod; protected *mod.instance_methods }[*args, &block]
         end
-      else
-        super
       end
     end
   end
