@@ -8,6 +8,7 @@ module Necromancy
     # @note self :: a -> b -> c
     # @param [Object] callable a -> b
     # @return [Necromancy] a -> c
+    # @example
     #   require 'necromancy'
     #   N = Necromancy.Applicative.new
     #   f = lambda(&N.+ * N) # == ->(o) {o + o}
