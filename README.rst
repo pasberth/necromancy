@@ -1,7 +1,7 @@
 屍術/Necromancy
 ================================================================================
 
-***屍術/Necromancy*** conjures up the functional code.
+*屍術/Necromancy* conjures up the functional code.
 
 .. code:: ruby
 
@@ -20,7 +20,7 @@ Features
 Function composition
 ________________________________________________________________________________
 
-Every messages to instance of Necromancy are function composition
+Every messages to instance of ``Necromancy`` are function composition
 by default. that is left-to-right composition.
 
 .. code:: ruby
@@ -53,8 +53,8 @@ No core extensions.
 ________________________________________________________________________________
 
 Open classes is evil unless that is need really!
-***屍術/Necromancy*** isn't. All methods are defining at local modules,
-and you can call their methods by sending some messages to a Necromancy object.
+*屍術/Necromancy* isn't. All methods are defining at local modules,
+and you can call their methods by sending some messages to a ``Necromancy`` object.
 
 Examples
 --------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ Examples
 Simple function composition
 ________________________________________________________________________________
 
-First, you create a Necromancy object.
+First, you create a ``Necromancy`` object.
 it is immutable, you can save it to any variable you like.
 for example, that is constant, global varibale, instance variable, class variable, local variable, etc.
 
