@@ -32,7 +32,11 @@ module Necromancy
     end
 
     def to_proc
-      instance_eval("->(*args) { i = 0; stack = []; xs = (#{@necromancy}); xs.size == 1 ? xs.first : xs }")
+      mkvariables = @references.size.times.map {|i| "@_#{i} = self.get_ref(#{i})" }.join(';')
+      instance_eval(<<-NECROMANCY)
+        #{mkvariables};
+        ->(*args) { i = 0; stack = []; xs = (#{@necromancy}); xs.size == 1 ? xs.first : xs }
+      NECROMANCY
     end
 
     def class
@@ -59,7 +63,7 @@ module Necromancy
         anyref.inspect
       else
         i = add_val(anyref)
-        "self.get_ref(i + #{i})"
+        "@_#{i}"
       end
     end
 
@@ -67,15 +71,18 @@ module Necromancy
       case anyref
       when Necromancy
         references = anyref.instance_eval {@references}
-        necromancy = anyref.instance_eval {@necromancy}
+        necromancy = anyref.instance_eval {@necromancy}.dup
+        references.size.times do |i|
+          necromancy.gsub!("@_#{i}", "@_#{i + references.size}")
+        end
         @references.concat(references)
-        "stack << i; i = #{references.size}; xs = (#{necromancy}); i = stack.pop; xs"
+        necromancy
       when ::Symbol
         "[:#{anyref}.to_proc.(*args)]"
       else
         prc = anyref.to_proc
         i = add_val(prc)
-        "[self.get_ref(i + #{i}).(*args)]"
+          "[@_#{i}.(*args)]"
       end
     end
   end
