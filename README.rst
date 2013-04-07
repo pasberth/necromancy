@@ -54,7 +54,7 @@ Examples
 Simple Function composion
 ________________________________________________________________________________
 
-First, your create a `Necromancy` object.
+First, you create a `Necromancy` object.
 it is immutable, you can save it to any variable you like.
 for example, that is constant, global varibale, instance variable, class variable, local variable, etc.
 
