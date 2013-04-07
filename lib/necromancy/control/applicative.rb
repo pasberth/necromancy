@@ -15,7 +15,7 @@ module Necromancy
     #   f.(42) # => 84
     def *(callable)
       str = make_evaluable_string(callable)
-      self.class.new("args.concat((#{str})); #{@necromancy}", @references.dup)
+      self.class.new("args << (#{str}); #{@necromancy}", @references.dup)
     end
 
     # A variant of {#*} with the arguments reversed. 

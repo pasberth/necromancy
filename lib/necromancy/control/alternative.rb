@@ -11,7 +11,7 @@ module Necromancy
     # Tests whether the result is empty or not.
     # If it is empty, {#empty?} returns the true, otherwise that returns the false.
     # By default, {#empty?} returns the true, if it is nil or false.
-    def empty?(x, *xs)
+    def empty?(x)
       not x
     end
 
@@ -31,7 +31,7 @@ module Necromancy
     #   f.("foo") # => "foofoo"
     def *(callable)
       str = make_evaluable_string(callable)
-      necromancy = "self.empty?(*(xs = (#{str}))) ? xs : (args.concat(xs); #{@necromancy})"
+      necromancy = "self.empty?(x = (#{str})) ? x : (args << x; #{@necromancy})"
       self.class.new(necromancy, @references.dup)
     end
 
@@ -56,7 +56,7 @@ module Necromancy
       end
 
       necromancy = exprs.inject do |else_expr, cond_expr|
-        "self.empty?(*(xs = (#{cond_expr}))) ? (#{else_expr}) : xs"
+        "self.empty?(x = (#{cond_expr})) ? (#{else_expr}) : x"
       end
 
       self.class.new(necromancy, @references.dup).instance_eval do
