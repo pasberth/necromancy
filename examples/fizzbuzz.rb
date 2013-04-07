@@ -1,7 +1,7 @@
 require 'necromancy'
 
-L = Necromancy.Alternative.new
-puts (1..100).map &(L%15).zero? >> proc{"FizzBuzz"} |
-                   (L%3).zero?  >> proc{"Fizz"}     |
-                   (L%5).zero?  >> proc{"Buzz"}     |
-                   L
+N = Necromancy.Alternative.new
+puts (1..100).map &(N%15).zero? >> proc{"FizzBuzz"} |
+                   (N%3).zero?  >> proc{"Fizz"}     |
+                   (N%5).zero?  >> proc{"Buzz"}     |
+                   N
