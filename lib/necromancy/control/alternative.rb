@@ -26,9 +26,9 @@ module Necromancy
     # @example
     #   require 'necromancy'
     #   N = Necromancy.Alternative.new
-    #   f = lambda(&N >> N.upcase)
+    #   f = lambda(&N.+ * N) # == ->(o) { :+.to_proc.(o,o) if o }
     #   f.(nil) # => nil
-    #   f.("foo") # => "FOO"
+    #   f.("foo") # => "foofoo"
     def *(callable)
       str = make_evaluable_string(callable)
       necromancy = "self.empty?(*(xs = (#{str}))) ? xs : (args.concat(xs); #{@necromancy})"
@@ -43,7 +43,7 @@ module Necromancy
     # @example
     #   require 'necromancy'
     #   N = Necromancy.Alternative.new
-    #   f = lambda(&N | ->(o){"foo"})
+    #   f = lambda(&N | ->(o){"foo"}) # == ->(o){ o ? o : "foo" }
     #   f.(nil) # => "foo"
     #   f.("bar") # => "var"
     def |(callable)
