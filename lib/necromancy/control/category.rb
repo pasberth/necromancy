@@ -6,7 +6,7 @@ module Necromancy
   module Control::Category; extend Control
 
     # Left-to-right composition.
-    # self should be a -> b.
+    # @note self :: a -> b
     # @param [Object] callable b -> c
     # @return [Necromancy] a -> c
     # @example
@@ -19,7 +19,7 @@ module Necromancy
     end
 
     # Right-to-left composition
-    # self should be b -> c.
+    # @note self :: b -> c
     # @param [Object] callable a -> b
     # @return [Necromancy] a -> c
     # @example
