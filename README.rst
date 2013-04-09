@@ -63,6 +63,32 @@ Open classes is evil unless that is need really!
 *屍術/Necromancy* isn't. All methods are defining at local modules,
 and you can call their methods by sending some messages to a ``Necromancy`` object.
 
+Influenced by Haskell
+________________________________________________________________________________
+
+*屍術/Necromancy* influenced by Haskell. Practically,
+the library provides Haskell's syntax for Ruby.
+
+.. code:: ruby
+
+  require 'necromancy'
+  N = Necromancy.Alternative.new
+
+  f = lambda(&N >> N + 1)
+  f.(42)  # => 43
+  f.(nil) # => nil
+
+.. code:: haskell
+
+  import Control.Applicative
+
+  f n = (+1) <$> n
+  f (Just 42) -- Just 43
+  f Nothing   -- Nothing
+
+.. image:: img/rbhs.png
+
+
 Examples
 --------------------------------------------------------------------------------
 
@@ -146,28 +172,3 @@ ________________________________________________________________________________
 
   N = Necromancy.Arrow.Alternative.hiding(:*, :**).new
   [nil, 42, "foo"].map &N.is_a?(Integer) >> (N * 2 & N ** 2) | N # => [nil, [84, 1764], "foo"]
-
-Influenced by Haskell
---------------------------------------------------------------------------------
-
-*屍術/Necromancy* influenced by Haskell. Practically,
-the library provides Haskell's syntax for Ruby.
-
-.. code:: ruby
-
-  require 'necromancy'
-  N = Necromancy.Alternative.new
-
-  f = lambda(&N >> N + 1)
-  f.(42)  # => 43
-  f.(nil) # => nil
-
-.. code:: haskell
-
-  import Control.Applicative
-
-  f n = (+1) <$> n
-  f (Just 42) -- Just 43
-  f Nothing   -- Nothing
-
-.. image:: img/rbhs.png
