@@ -14,6 +14,10 @@
   # [:foo, :hoge, :bar, :fuga].select{|s| s.to_s.length > 3} # => [:hoge, :fuga]
   [:foo, :hoge, :bar, :fuga].select &N.to_s . length > 3
 
+Influenced by Haskell.
+
+.. image:: img/rbhs.png
+
 Features
 --------------------------------------------------------------------------------
 
