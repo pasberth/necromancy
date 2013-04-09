@@ -88,6 +88,8 @@ the library provides Haskell's syntax for Ruby.
 
 .. image:: img/rbhs.png
 
+Illustrated by `@chomado <https://twitter.com/chomado/>`_
+
 
 Examples
 --------------------------------------------------------------------------------
