@@ -14,9 +14,12 @@
   # [:foo, :hoge, :bar, :fuga].select{|s| s.to_s.length > 3} # => [:hoge, :fuga]
   [:foo, :hoge, :bar, :fuga].select &N.to_s . length > 3
 
-Influenced by Haskell.
+Installation
+--------------------------------------------------------------------------------
 
-.. image:: img/rbhs.png
+.. code:: sh
+
+  gem install necromancy
 
 Features
 --------------------------------------------------------------------------------
@@ -144,10 +147,27 @@ ________________________________________________________________________________
   N = Necromancy.Arrow.Alternative.hiding(:*, :**).new
   [nil, 42, "foo"].map &N.is_a?(Integer) >> (N * 2 & N ** 2) | N # => [nil, [84, 1764], "foo"]
 
-
-Installation
+Influenced by Haskell
 --------------------------------------------------------------------------------
 
-.. code:: sh
+*屍術/Necromancy* influenced by Haskell. Practically,
+the library provides Haskell's syntax for Ruby.
 
-  gem install necromancy
+.. code:: ruby
+
+  require 'necromancy'
+  N = Necromancy.Alternative.new
+
+  f = lambda(&N >> N + 1)
+  f.(42)  # => 43
+  f.(nil) # => nil
+
+.. code:: haskell
+
+  import Control.Applicative
+
+  f n = (+1) <$> n
+  f (Just 42) -- Just 43
+  f Nothing   -- Nothing
+
+.. image:: img/rbhs.png
