@@ -46,7 +46,7 @@ their arguments are given into that function each time.
   N.f(x) == ->(o) { :f.to_proc(o, x) } == ->(o) { o.f(x) }
 
 
-Rich extensions.
+Rich extensions
 ________________________________________________________________________________
 
 If you want, you can use extensions by clojuring up the evil spirit.
@@ -56,7 +56,7 @@ If you want, you can use extensions by clojuring up the evil spirit.
   M = Necromancy.Alternative.new
   M.x | M.y == ->(o) { o.x || o.y }
 
-No core extensions.
+No core extensions
 ________________________________________________________________________________
 
 Open classes is evil unless that is need really!
