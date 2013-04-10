@@ -35,4 +35,11 @@ describe Necromancy::Control::Alternative do
     [{x: 1}, nil, {y: 2}].inject(&l.merge << ->(x,y){x&&y}).
       should == [{x: 1}, nil, {y: 2}].inject {|x, y| x.merge(y) if x && y }
   end
+
+  example do
+    ary = (0..5).to_a
+    f = lambda(&l.pop.many)
+    f.(ary).should == (0..5).to_a.reverse
+    ary.should == []
+  end
 end

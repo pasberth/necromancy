@@ -69,5 +69,16 @@ module Necromancy
 
     alias __Applicative_Astarisk *
     protected :__Applicative_Astarisk
+
+
+    def some
+      necromancy = "stack << []; while(not empty?(*(xs = (#{@necromancy})))); stack[-1] << (xs.size == 1 ? xs.first : xs); end; stack[-1].empty? ? xs : [stack.pop]"
+      self.class.new(necromancy, @references.dup)
+    end
+
+    def many
+      necromancy = "stack << []; while(not empty?(*(xs = (#{@necromancy})))); stack[-1] << (xs.size == 1 ? xs.first : xs); end; [stack.pop]"
+      self.class.new(necromancy, @references.dup)
+    end
   end
 end

@@ -35,6 +35,8 @@ describe Necromancy::Control::Alternative do
     example { proc(&l >> f * l).(r).should == proc(&l).(r) }
     example { proc(&g << l).(r).should == proc(&l).(r) }
     example { proc(&f * l << l).(r).should == proc(&l).(r) }
+    example { proc(&l.some).(r).should == proc(&l).(r) }
+    example { proc(&l.many).(r).should == [] }
   end
 
   it_behaves_like "empty" do
